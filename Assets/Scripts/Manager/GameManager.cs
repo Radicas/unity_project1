@@ -84,10 +84,10 @@ public class GameManager : MonoBehaviour
         {
             SoundManager.Instance.PlayBackgroundMusic();
         }
-      
+
         CheckDisplayWarningAchievement();
 
-     
+
     }
     private void OnChange(Sprite _spr, string _text)
     {
@@ -115,13 +115,13 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-     
+
     }
 
     private void LoadLevelToPlay(int realLevelIndex)
     {
         MapLevelManager mapInstall = mapInstall = levelConfig.lstAllLevel[realLevelIndex];
-      
+
         mapLevel = Instantiate(mapInstall, Vector3.zero, Quaternion.identity);
         Debug.LogError("wtf:" + mapLevel.loadListStick);
         if (mapLevel.lstAllStick.Count > 0)
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator IEWaitToShowWinLose(bool isWin)
     {
         yield return new WaitForSeconds(0.5f);
-      
+
         if (isWin)
         {
 
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (Utils.LEVEL_INDEX >= DataParam.levelpassshowad)
                     {
-                     
+
                         DataParam.firsttime = 1;
                         Debug.LogError("========show ads TH 1");
                     }
@@ -200,11 +200,11 @@ public class GameManager : MonoBehaviour
                     {
                         countpasslevel = 0;
                         DataParam.oldTimeShowAds = System.DateTime.Now;
-                       
+
                     }
                     Debug.LogError("========show ads TH 2");
                 }
-           
+
             }
         }
         else
@@ -216,12 +216,12 @@ public class GameManager : MonoBehaviour
                 gPanelWin.gameObject.SetActive(true);
                 effectCamera.SetActive(false);
                 LoseDisplay();
-             //   countpasslevel = 0;
+                //   countpasslevel = 0;
                 if (SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlaySound(SoundManager.Instance.acLose);
                 }
-      
+
             }
         }
     }
@@ -287,21 +287,49 @@ public class GameManager : MonoBehaviour
         OnUpdateCoin();
         OnNextLevel();
 #else
-               
+
 #endif
         //    Debug.LogError("X2 Coin");
 
     }
+
     public void OnSkipByVideo()
     {
 
 #if UNITY_EDITOR
-        OnNextLevel();
+        // OnNextLevel();
+
+        ShowPangleAd();
 #else
-
+        ShowPangleAd();
 #endif
-
     }
+
+    private void ShowPangleAd()
+    {
+        // 显示激励视频广告
+        if (PangleAdManager.Instance != null)
+        {
+            PangleAdManager.Instance.ShowRewardVideoAd(
+                onRewarded: () =>
+                {
+                    // 广告观看成功，跳过关卡
+                    Debug.Log("广告观看完成，跳过关卡");
+                    OnNextLevel();
+                },
+                onFailed: () =>
+                {
+                    // 广告播放失败，提示用户
+                    Debug.LogWarning("广告加载失败，请稍后再试");
+                }
+            );
+        }
+        else
+        {
+            Debug.LogError("PangleAdManager未初始化");
+        }
+    }
+
     public void OnReplay()
     {
         if (ObjectPoolerManager.Instance != null)
