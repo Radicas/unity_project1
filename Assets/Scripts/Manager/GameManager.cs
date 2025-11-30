@@ -297,9 +297,7 @@ public class GameManager : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        // OnNextLevel();
-
-        ShowPangleAd();
+        OnNextLevel();
 #else
         ShowPangleAd();
 #endif
