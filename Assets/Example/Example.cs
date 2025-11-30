@@ -55,7 +55,7 @@ public sealed class Example : MonoBehaviour
         // sdk初始化
         SDKConfiguration sdkConfiguration = new SDKConfiguration.Builder()
             .SetAppId(CSJMDAdPositionId.APP_ID)
-            .SetAppName("APP测试媒体")
+            .SetAppName("Rescue")
             .SetUseMediation(Example.useMediation) // 是否使用融合功能，置为false，可不初始化聚合广告相关模块
             .SetDebug(true) // debug日志开关，app发版时记得关闭
             .SetMediationConfig(GetMediationConfig())

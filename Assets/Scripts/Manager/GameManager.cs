@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public Image gPanelWin;
     //  public GameObject gPanelLose;
 
-    public Example AdManager;
+    public Example adExample;
 
     [HideInInspector] public GameObject gTargetFollow;
     public void LoseDisplay()
@@ -301,16 +301,17 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         OnNextLevel();
 #else
-        ShowPangleAd();
+        ShowAd();
 #endif
     }
 
-    private void ShowPangleAd()
+    private void ShowAd()
     {
         // 显示激励视频广告
-        AdManager.LoadRewardAd();
-
-        AdManager.ShowRewardAd();
+        // adExample.LoadMediationRewardAd();
+        adExample.LoadRewardAd();
+        // adExample.ShowMediationRewardAd();
+        adExample.ShowRewardAd();
     }
 
     public void OnReplay()
