@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public Image gPanelWin;
     //  public GameObject gPanelLose;
 
+    public Example AdManager;
+
     [HideInInspector] public GameObject gTargetFollow;
     public void LoseDisplay()
     {
@@ -306,26 +308,9 @@ public class GameManager : MonoBehaviour
     private void ShowPangleAd()
     {
         // 显示激励视频广告
-        if (PangleAdManager.Instance != null)
-        {
-            PangleAdManager.Instance.ShowRewardVideoAd(
-                onRewarded: () =>
-                {
-                    // 广告观看成功，跳过关卡
-                    Debug.Log("广告观看完成，跳过关卡");
-                    OnNextLevel();
-                },
-                onFailed: () =>
-                {
-                    // 广告播放失败，提示用户
-                    Debug.LogWarning("广告加载失败，请稍后再试");
-                }
-            );
-        }
-        else
-        {
-            Debug.LogError("PangleAdManager未初始化");
-        }
+        AdManager.LoadRewardAd();
+
+        AdManager.ShowRewardAd();
     }
 
     public void OnReplay()
